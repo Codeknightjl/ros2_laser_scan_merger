@@ -58,7 +58,7 @@ private:
   void update_point_cloud_rgb()
   {
     refresh_params();
-    pcl::PointCloud<pcl::PointXYZI> cloud_;
+    pcl::PointCloud<pcl::PointXYZRGB> cloud_;
     std::vector<std::array<float, 2>> scan_data;
     int count = 0;
     float min_theta = 0;
@@ -76,12 +76,9 @@ private:
       for (float i = temp_min_; i <= temp_max_ && count < laser1_->ranges.size();
            i += laser1_->angle_increment)
       {
-        pcl::PointXYZI pt; // Stores intensity data unlike pcl::PointXYZRGB
-        // pt = pcl::PointXYZRGB(laser1R_, laser1G_, laser1B_);
+        pcl::PointXYZRGB pt;
+        pt = pcl::PointXYZRGB(laser1R_, laser1G_, laser1B_);
         int used_count_ = count;
-        pt.intensity = laser1_->intensities[used_count_]; // Assign intensity
-        
-
         if (flip1_)
         {
           used_count_ = (int)laser1_->ranges.size() - 1 - count;
@@ -153,12 +150,10 @@ private:
       for (float i = temp_min_; i <= temp_max_ && count < laser2_->ranges.size();
            i += laser2_->angle_increment)
       {
-        pcl::PointXYZI pt; // Stores intensity data unlike pcl::PointXYZRGB
-        // pt = pcl::PointXYZRGB(laser1R_, laser1G_, laser1B_);
+        pcl::PointXYZRGB pt;
+        pt = pcl::PointXYZRGB(laser2R_, laser2G_, laser2B_);
+
         int used_count_ = count;
-        pt.intensity = laser1_->intensities[used_count_]; // Assign intensity
-
-
         if (flip2_)
         {
           used_count_ = (int)laser2_->ranges.size() - 1 - count;
